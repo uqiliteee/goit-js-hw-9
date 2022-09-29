@@ -22,7 +22,7 @@ startBtn.removeAttribute('disabled', '')
 
 function onStopBtn() {
     clearInterval(timerId);
-    stopBtn.removeAttribute('disabled', 'disabled')
+    startBtn.removeAttribute('disabled', 'disabled')
 }
 
 
