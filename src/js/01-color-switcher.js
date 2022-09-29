@@ -18,7 +18,6 @@ function onStartBtn() {
     
 }
 
-startBtn.removeAttribute('disabled', '')
 
 function onStopBtn() {
     clearInterval(timerId);
