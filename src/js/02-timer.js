@@ -26,6 +26,7 @@ const libraryFlatpickr = flatpickr("#datetime-picker", {
             Notify.failure('Please choose a date in the future');
             return
         }
+        refs.startBtn.setAttribute('disabled', '');
 
         refs.startBtn.removeAttribute('disabled', '');
         chooseTime = selectedDates[0].getTime();
@@ -37,23 +38,46 @@ class Timer {
         this.intervalId = null;
         this.isActive = false;
         this.onTick = onTick;
+
+        this.init();
     }
+
+    init() {
+    const time = this.convertMs(0);
+    this.onTick(time);
+    };
+
 
     start() {
         if (this.isActive) {
             return;
         }
 
+        if(chooseTime < 1000){
+         clearInterval(intervalId);
+      }
+
+
         this.isActive = true;
 
         this.intervalId = setInterval(() => {
             const currentTime = Date.now();
-            const deltaTime = chooseTime - currentTime;
+            const deltaTime = chooseTime - currentTime
             const time = this.convertMs(deltaTime);
 
             this.onTick(time);
         }, 1000);
+
+        
     };
+
+    stop() {
+         clearInterval(this.intervalId);
+         this.isActive = false;
+         const time = this.convertMs(0);
+         this.onTick(time);
+    };
+
 
     convertMs(ms) {
         // Number of milliseconds per unit of time
@@ -77,8 +101,10 @@ class Timer {
 
      pad(value) {
     return String(value).padStart(2, '0');
-  }
+    }
 }
+
+
 
 const timer = new Timer({
     onTick: updateClockface,
