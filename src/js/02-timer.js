@@ -66,16 +66,13 @@ class Timer {
             const time = this.convertMs(deltaTime);
 
             this.onTick(time);
+
+            if(deltaTime < 1000){
+                clearInterval(this.intervalId);
+            };
         }, 1000);
 
         
-    };
-
-    stop() {
-         clearInterval(this.intervalId);
-         this.isActive = false;
-         const time = this.convertMs(0);
-         this.onTick(time);
     };
 
 
